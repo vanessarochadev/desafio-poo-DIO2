@@ -1,0 +1,88 @@
+public abstract class ContaBancaria {
+    private int numeroConta;
+    private double saldo;
+
+    public ContaBancaria(int numeroConta) {
+        this.numeroConta = numeroConta;
+        this.saldo = 0.0;
+    }
+
+    public int getNumeroConta() {
+        return numeroConta;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public abstract void depositar(double valor);
+
+    public abstract void sacar(double valor);
+}
+Em seguida, criamos uma classe filha chamada "ContaCorrente" que herda da classe "ContaBancaria". A classe "ContaCorrente" adiciona um atributo para taxa de juros e implementa os métodos de depósito e saque.
+
+
+public class ContaCorrente extends ContaBancaria {
+    private double taxaJuros;
+
+    public ContaCorrente(int numeroConta, double taxaJuros) {
+        super(numeroConta);
+        this.taxaJuros = taxaJuros;
+    }
+
+    public double getTaxaJuros() {
+        return taxaJuros;
+    }
+
+    @Override
+    public void depositar(double valor) {
+        double valorFinal = valor - (valor * (taxaJuros / 100));
+        setSaldo(getSaldo() + valorFinal);
+    }
+
+    @Override
+    public void sacar(double valor) {
+        if (valor > getSaldo()) {
+            System.out.println("Saldo insuficiente.");
+        } else {
+            setSaldo(getSaldo() - valor);
+        }
+    }
+}
+Por fim, criamos outra classe filha chamada "ContaPoupanca" que também herda da classe "ContaBancaria". A classe "ContaPoupanca" adiciona um atributo para limite de saque e implementa os métodos de depósito e saque.
+
+
+public class ContaPoupanca extends ContaBancaria {
+    private double limiteSaque;
+
+    public ContaPoupanca(int numeroConta, double limiteSaque) {
+        super(numeroConta);
+        this.limiteSaque = limiteSaque;
+    }
+
+    public double getLimiteSaque() {
+        return limiteSaque;
+    }
+
+    @Override
+    public void depositar(double valor) {
+        setSaldo(getSaldo() + valor);
+    }
+
+    @Override
+    public void sacar(double valor) {
+        if (valor > limiteSaque) {
+            System.out.println("Valor de saque excede o limite.");
+        } else if (valor > getSaldo()) {
+            System.out.println("Saldo insuficiente.");
+        } else {
+            setSaldo(getSaldo() - valor);
+        }
+    }
+}
+Assim, temos três classes que utilizam abstração, encapsulamento, herança e polimorfismo.
+
+
+
+
+
